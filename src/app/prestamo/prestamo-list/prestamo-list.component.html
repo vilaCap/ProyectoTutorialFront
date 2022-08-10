@@ -1,0 +1,70 @@
+<div calss="container">
+    <div class="filters">
+        <form action="">
+            <mat-form-field>
+                <mat-label style="color:black">Título...</mat-label>
+                <input type="text" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterTitle" placeholder="Título..." name="title">
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label style="color:black">Cliente...</mat-label>
+                <input type="text" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterClient" placeholder="Cliente..." name="client">
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label style="color:black">Fecha...</mat-label>
+                <input type="date" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterDate" placeholder="Fecha..." name="date">
+            </mat-form-field>
+        </form>
+        
+    
+        <div class="buttons">
+            <button mat-stroked-button (click)="onCleanFilter()">Limpiar</button> 
+            <button mat-stroked-button (click)="onSearch()">Filtrar</button> 
+        </div>   
+    </div>
+    
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> Nombre del juego  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+            <mat-header-cell *matHeaderCellDef> Nombre del cliente  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.client}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="prestamoDate">
+            <mat-header-cell *matHeaderCellDef> Fecha de prestamo  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.prestamoDate | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="devDate">
+            <mat-header-cell *matHeaderCellDef> Fescha de devolución </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.devDate | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent">
+                    <mat-icon (click)="deletePrestamo(element)">clear</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+       
+    </mat-table>
+
+    <div class="button_create">
+        <button mat-flat-button color="primary" (click)="createPrestamo()">Nuevo prestamo</button>
+    </div>   
+</div>
