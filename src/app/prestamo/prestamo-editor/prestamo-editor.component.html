@@ -6,22 +6,28 @@
             <mat-label>Identificador</mat-label>
             <input type="number" matInput placeholder="Identificador" [(ngModel)]="prestamo.id" name="id" disabled>
         </mat-form-field>
-
+        
         <mat-form-field>
             <mat-label>Nombre del juego</mat-label>
-            <input type="text" matInput placeholder="Nombre del juego" [(ngModel)]="prestamo.title" name="title" required>
-            <mat-error>El nombre no puede estar vacío</mat-error>
+            <mat-select [(value)]="selectedGame">
+                <mat-option *ngFor="let game of games" value={{game.title}}>
+                    {{game.title}}
+                </mat-option>
+              </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Nombre del cliente</mat-label>
-            <input type="text" matInput placeholder="Nombre del cliente" [(ngModel)]="prestamo.client" name="client" required>
-            <mat-error>El nombre no puede estar vacío</mat-error>
-        </mat-form-field>
+      <mat-form-field>
+          <mat-label style="color:black">Nombre del cliente</mat-label>
+          <mat-select [(value)]="selectedClient">
+              <mat-option *ngFor="let client of clients" value={{client.name}}>
+                  <option>{{client.name}}</option>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
         <mat-form-field>
             <mat-label>Fecha de prestamo</mat-label>
-            <input type="date" matInput [(ngModel)]="prestamo.prestamoDate" name="prestamoDate" required>
+            <input type="date" matInput [(ngModel)]="prestamo.loanDate" name="prestamoDate" required>
             <mat-error>La fecha de prestamo no puede estar vacía</mat-error>
         </mat-form-field>
 

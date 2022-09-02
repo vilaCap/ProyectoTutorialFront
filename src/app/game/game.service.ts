@@ -7,12 +7,15 @@ import { Game } from './model/Game';
     providedIn: 'root'
 })
 export class GameService {
+    private games: Game[];
+    private game: Game;
 
     constructor(
         private http: HttpClient
     ) { }
 
-    getGames(title?: String, categoryId?: number): Observable<Game[]> {            
+    getGames(title?: String, categoryId?: number): Observable<Game[]> {   
+
         return this.http.get<Game[]>(this.composeFindUrl(title, categoryId));
     }
 
@@ -42,5 +45,14 @@ export class GameService {
 
         if (params == '') return url;
         else return url + '?'+params;
+    }
+
+    getGame(title: string): Game{
+
+        this.getGames().subscribe(
+            games => this.games = games
+        );
+
+        return this.game;
     }
 }

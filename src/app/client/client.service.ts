@@ -11,6 +11,8 @@ import { CLIENT_DATA_PRU} from './model/mock-clients-pru'
 })
 export class ClientService {
   private CLIENTS;
+  private client: Client;
+  private clients: Client[];
   
   constructor(
     private http: HttpClient
@@ -30,5 +32,22 @@ export class ClientService {
           url += "/"+client.id;
       }
       return this.http.put<Client>(url, client);
+  }
+
+  getClient(name: string): Client{
+    console.log("name: " + name);
+    this.getClients().subscribe(
+      clients => this.clients = clients
+      );
+      console.log("suscrito " + this.clients);
+
+
+      //for(var i = 0; i<this.clients.length; i++){
+      //  console.log("client = " + this.client[i].name);
+      //  if(this.client[i].name == name)
+      //    this.client = this.client[i];
+      //  }
+    
+    return this.client;
   }
 }

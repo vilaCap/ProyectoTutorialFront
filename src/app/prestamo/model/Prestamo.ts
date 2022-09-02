@@ -1,9 +1,10 @@
 import { Client } from "src/app/client/model/Client";
+import { Game } from "src/app/game/model/Game";
 
 export class Prestamo {
     id: number;
-    title: string;
+    game: Game;
     client: Client;
-    prestamoDate: Date;
+    loanDate: Date;
     devDate: Date;
 }

@@ -1,22 +1,30 @@
 <div calss="container">
     <div class="filters">
+
         <form action="">
             <mat-form-field>
-                <mat-label style="color:black">Título...</mat-label>
-                <input type="text" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterTitle" placeholder="Título..." name="title">
-            </mat-form-field>
-    
-            <mat-form-field>
-                <mat-label style="color:black">Cliente...</mat-label>
-                <input type="text" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterClient" placeholder="Cliente..." name="client">
-            </mat-form-field>
+                <mat-label>Titulo...</mat-label>
+                <mat-select [(value)]="selectedGame" (selectionChange)="setFilterGame($event)">
+                  <mat-option *ngFor="let game of games" value={{game.id}}>
+                      {{game.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                  <mat-label style="color:black">Cliente...</mat-label>
+                  <mat-select [(value)]="selectedClient" (selectionChange)="setFilterClient($event)">
+                      <mat-option *ngFor="let client of clients" value={{client.id}}>
+                          <option>{{client.name}}</option>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
     
             <mat-form-field>
                 <mat-label style="color:black">Fecha...</mat-label>
-                <input type="date" style="background-color:rgb(244, 244, 244); color:black" matInput [(ngModel)]="filterDate" placeholder="Fecha..." name="date">
+                <input type="date" style="color:black" matInput [(ngModel)]="filterDate" placeholder="Fecha..." name="date">
             </mat-form-field>
         </form>
-        
     
         <div class="buttons">
             <button mat-stroked-button (click)="onCleanFilter()">Limpiar</button> 
@@ -30,19 +38,19 @@
             <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef> Nombre del juego  </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        <ng-container matColumnDef="game">
+            <mat-header-cell *matHeaderCellDef> Juego prestado </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.game.title}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="client">
             <mat-header-cell *matHeaderCellDef> Nombre del cliente  </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.client}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.client.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="prestamoDate">
             <mat-header-cell *matHeaderCellDef> Fecha de prestamo  </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.prestamoDate | date: 'dd/MM/yyyy'}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.loanDate | date: 'dd/MM/yyyy'}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="devDate">
@@ -63,6 +71,8 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
        
     </mat-table>
+
+    <mat-paginator (page)="loadPage($event)" [pageSizeOptions]="[5, 10, 20]" [pageIndex]="pageNumber" [pageSize]="pageSize" [length]="totalElements" showFirstLastButtons></mat-paginator>
 
     <div class="button_create">
         <button mat-flat-button color="primary" (click)="createPrestamo()">Nuevo prestamo</button>

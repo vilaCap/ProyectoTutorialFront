@@ -5,12 +5,12 @@
         <form>
             <mat-form-field>
                 <mat-label style="color:black">Título del juego</mat-label>
-                <input type="text" style="background-color:rgb(244, 244, 244); color:black" matInput placeholder="Título del juego" [(ngModel)]="filterTitle" name="title">
+                <input type="text" style="color:black" matInput placeholder="Título del juego" [(ngModel)]="filterTitle" name="title">
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label style="color:black">Categoría del juego</mat-label>
-                <mat-select style="background-color:rgb(244, 244, 244); color:black" disableRipple [(ngModel)]="filterCategory" name="category">
+                <mat-select style="color:black" disableRipple [(ngModel)]="filterCategory" name="category">
                     <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
                 </mat-select>
             </mat-form-field>    
