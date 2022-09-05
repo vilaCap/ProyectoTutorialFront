@@ -10,20 +10,20 @@ import { ClientService } from 'src/app/client/client.service';
 import { Client } from 'src/app/client/model/Client';
 import { GameService } from 'src/app/game/game.service';
 import { Game } from 'src/app/game/model/Game';
-import { Prestamo } from '../model/Prestamo';
-import { PrestamoService } from '../prestamo.service';
+import { Loan } from '../model/Loan';
+import { LoanService } from '../loan.service';
 
 @Component({
-  selector: 'app-prestamo-editor',
-  templateUrl: './prestamo-editor.component.html',
-  styleUrls: ['./prestamo-editor.component.scss']
+  selector: 'app-loan-editor',
+  templateUrl: './loan-editor.component.html',
+  styleUrls: ['./loan-editor.component.scss']
 })
-export class PrestamoEditorComponent implements OnInit {
+export class LoanEditorComponent implements OnInit {
 
   games: Game[];
   clients: Client[];
-  prestamos: Prestamo[];
-  prestamo: Prestamo;
+  loans: Loan[];
+  loan: Loan;
   selectedGame: string;
   selectedClient: string;
   game: Game;
@@ -33,22 +33,22 @@ export class PrestamoEditorComponent implements OnInit {
   
 
   constructor(
-    public dialogRef: MatDialogRef<PrestamoEditorComponent>,
+    public dialogRef: MatDialogRef<LoanEditorComponent>,
     public gameService: GameService,
     public clientService: ClientService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private prestamoService: PrestamoService) { }
+    private loanService: LoanService) { }
 
   ngOnInit(): void {
-    if (this.data.prestamo != null) {
-      this.prestamo = Object.assign({}, this.data.prestamo);
+    if (this.data.loan != null) {
+      this.loan = Object.assign({}, this.data.loan);
     }
     else {
-      this.prestamo = new Prestamo();
+      this.loan = new Loan();
     }
 
-    this.prestamoService.getPrestamo().subscribe(
-      prestamos => this.prestamos = prestamos
+    this.loanService.getLoan().subscribe(
+      loans => this.loans = loans
     )
 
     this.gameService.getGames().subscribe(
@@ -74,8 +74,8 @@ export class PrestamoEditorComponent implements OnInit {
   }
   
   onSave() {
-    let dateLoan: Date = new Date(this.prestamo.loanDate);
-    let dateDev: Date = new Date(this.prestamo.devDate);
+    let dateLoan: Date = new Date(this.loan.loanDate);
+    let dateDev: Date = new Date(this.loan.devDate);
     let date14: Date = new Date();
     let existsClient: boolean = false;
     let existsGame: boolean = false;
@@ -88,11 +88,11 @@ export class PrestamoEditorComponent implements OnInit {
       alert("El prestamo puede durar un maximo de 14 dias");
     }
     else {
-      for(var i = 0; i < this.prestamos.length; i++){ 
-        if(this.prestamos[i].client.name == this.selectedClient){
+      for(var i = 0; i < this.loans.length; i++){ 
+        if(this.loans[i].client.name == this.selectedClient){
           existsClient = true;
         }
-        if(this.prestamos[i].game.title == this.selectedGame){
+        if(this.loans[i].game.title == this.selectedGame){
           existsGame = true;
         }
       }
@@ -106,18 +106,18 @@ export class PrestamoEditorComponent implements OnInit {
         //for para obtener el juego que tiene el titulo seleccionado
         for(var i = 0; i < this.games.length; i++){
           if(this.games[i].title == this.selectedGame){
-            this.prestamo.game = this.games[i];
+            this.loan.game = this.games[i];
           }
         }
     
         //for para obtener el cliente seleccionado
         for(var i = 0; i < this.clients.length; i++){
           if(this.clients[i].name == this.selectedClient){
-            this.prestamo.client = this.clients[i];
+            this.loan.client = this.clients[i];
           }
         }
     
-        this.prestamoService.savePrestamo(this.prestamo).subscribe(result => {
+        this.loanService.saveLoan(this.loan).subscribe(result => {
           this.dialogRef.close();
         });
       }
@@ -137,7 +137,6 @@ export class PrestamoEditorComponent implements OnInit {
   }
 
   getNameClient(): string{
-    console.log("get name client: " + this.selectedClient);
    return this.nameClient;
   }
 

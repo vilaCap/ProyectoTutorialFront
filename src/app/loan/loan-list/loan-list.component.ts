@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Prestamo } from '../model/Prestamo';
-import { PrestamoService } from '../prestamo.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Loan } from '../model/Loan';
+import { LoanService } from '../loan.service';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationComponent } from 'src/app/core/dialog-confirmation/dialog-confirmation.component';
-import { PrestamoEditorComponent } from '../prestamo-editor/prestamo-editor.component';
+import { LoanEditorComponent } from '../loan-editor/loan-editor.component';
 import { Game } from 'src/app/game/model/Game';
 import { GameService } from 'src/app/game/game.service';
 import { Client } from 'src/app/client/model/Client';
@@ -16,12 +16,12 @@ import { Pageable } from 'src/app/author/model/page/Pageable';
 
 
 @Component({
-  selector: 'app-prestamo-list',
-  templateUrl: './prestamo-list.component.html',
-  styleUrls: ['./prestamo-list.component.scss']
+  selector: 'app-loan-list',
+  templateUrl: './loan-list.component.html',
+  styleUrls: ['./loan-list.component.scss']
 })
-export class PrestamoListComponent implements OnInit {
-  prestamos: Prestamo[];
+export class LoanListComponent implements OnInit {
+  loans: Loan[];
   game : Game;
   games: Game[];
   client: Client;
@@ -29,7 +29,7 @@ export class PrestamoListComponent implements OnInit {
   filterGame: number;
   filterClient: number;
   filterDate: Date;
-  dataSource = new MatTableDataSource<Prestamo>();
+  dataSource = new MatTableDataSource<Loan>();
   displayedColumns: string[] = ['id', 'game', 'client', 'prestamoDate', 'devDate', 'action'];
   cMultiCtrl: FormControl = new FormControl();
   selectedGame: string;
@@ -40,7 +40,7 @@ export class PrestamoListComponent implements OnInit {
   totalElements: number = 0;
 
   constructor(
-    private prestamoService: PrestamoService,
+    private loanService: LoanService,
     private gameService: GameService,
     private clientService: ClientService,
     public dialog: MatDialog
@@ -59,8 +59,8 @@ export class PrestamoListComponent implements OnInit {
     this.loadPage();
   }
 
-  createPrestamo(){
-    const dialogRef = this.dialog.open(PrestamoEditorComponent, {
+  createLoan(){
+    const dialogRef = this.dialog.open(LoanEditorComponent, {
       data: {}
     });
 
@@ -76,7 +76,7 @@ export class PrestamoListComponent implements OnInit {
     this.selectedClient = null;
     this.filterDate = null;
 
-    this.onSearch();
+    this.loadPage();
   }
 
   onSearch(): void {  
@@ -84,19 +84,19 @@ export class PrestamoListComponent implements OnInit {
     let client = this.filterClient != null ? this.filterClient : null;
     let date = this.filterDate != null ? this.filterDate : null;
   
-    this.prestamoService.getPrestamo(game, client, date).subscribe(
-        prestamos =>  this.dataSource.data = prestamos
+    this.loanService.getLoan(game, client, date).subscribe(
+        loans =>  this.dataSource.data = loans
     );
   }
 
-  deletePrestamo(prestamo){
+  deleteLoan(loan){
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { title: "Eliminar prestamo", description: "Atención si borra el prestamo se perderán sus datos.<br> ¿Desea eliminar el prestamo?" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.prestamoService.deletePrestamo(prestamo.id).subscribe(result => {
+        this.loanService.deleteLoan(loan.id).subscribe(result => {
           this.ngOnInit();
         }); 
       }
@@ -131,7 +131,7 @@ export class PrestamoListComponent implements OnInit {
         pageable.pageNumber = event.pageIndex;
     }
 
-    this.prestamoService.getPrestamos(pageable).subscribe(data => {
+    this.loanService.getLoans(pageable).subscribe(data => {
         this.dataSource.data = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;

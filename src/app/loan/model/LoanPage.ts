@@ -1,8 +1,8 @@
 import { Pageable } from "./page/Pageable";
-import { Prestamo } from "./Prestamo";
+import { Loan } from "./Loan";
 
 export class LoanPage {
-    content: Prestamo[];
+    content: Loan[];
     pageable: Pageable;
     totalElements: number;
 }

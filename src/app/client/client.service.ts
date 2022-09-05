@@ -35,18 +35,10 @@ export class ClientService {
   }
 
   getClient(name: string): Client{
-    console.log("name: " + name);
+    
     this.getClients().subscribe(
       clients => this.clients = clients
       );
-      console.log("suscrito " + this.clients);
-
-
-      //for(var i = 0; i<this.clients.length; i++){
-      //  console.log("client = " + this.client[i].name);
-      //  if(this.client[i].name == name)
-      //    this.client = this.client[i];
-      //  }
     
     return this.client;
   }

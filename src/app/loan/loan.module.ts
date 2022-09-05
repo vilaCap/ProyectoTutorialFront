@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PrestamoListComponent } from './prestamo-list/prestamo-list.component';
+import { LoanListComponent } from './loan-list/loan-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,14 +12,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { PrestamoEditorComponent } from './prestamo-editor/prestamo-editor.component';
+import { LoanEditorComponent } from './loan-editor/loan-editor.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
 @NgModule({
   declarations: [
-    PrestamoListComponent,
-    PrestamoEditorComponent
+    LoanListComponent,
+    LoanEditorComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +35,8 @@ import { PrestamoEditorComponent } from './prestamo-editor/prestamo-editor.compo
     MatSelectModule,
     MatTableModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
-export class PrestamoModule { }
+export class LoanModule { }

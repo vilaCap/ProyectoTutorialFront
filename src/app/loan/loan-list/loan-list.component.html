@@ -18,12 +18,14 @@
                           <option>{{client.name}}</option>
                       </mat-option>
                     </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label style="color:black">Fecha...</mat-label>
+                    <input style="color:black" matInput [matDatepicker]="picker" name="date" [(ngModel)]="filterDate" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
-    
-            <mat-form-field>
-                <mat-label style="color:black">Fecha...</mat-label>
-                <input type="date" style="color:black" matInput [(ngModel)]="filterDate" placeholder="Fecha..." name="date">
-            </mat-form-field>
         </form>
     
         <div class="buttons">
@@ -62,7 +64,7 @@
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <button mat-icon-button color="accent">
-                    <mat-icon (click)="deletePrestamo(element)">clear</mat-icon>
+                    <mat-icon (click)="deleteLoan(element)">clear</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>
@@ -74,7 +76,7 @@
 
     <mat-paginator (page)="loadPage($event)" [pageSizeOptions]="[5, 10, 20]" [pageIndex]="pageNumber" [pageSize]="pageSize" [length]="totalElements" showFirstLastButtons></mat-paginator>
 
-    <div class="button_create">
-        <button mat-flat-button color="primary" (click)="createPrestamo()">Nuevo prestamo</button>
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="createLoan()">Nuevo prestamo</button>
     </div>   
 </div>

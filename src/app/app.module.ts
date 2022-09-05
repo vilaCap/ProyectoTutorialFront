@@ -9,7 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { AuthorModule } from './author/author.module';
 import { GameModule } from './game/game.module';
 import { ClientModule } from './client/client.module';
-import { PrestamoModule } from './prestamo/prestamo.module';
+import { LoanModule } from './loan/loan.module';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { PrestamoModule } from './prestamo/prestamo.module';
     GameModule,
     ClientModule,
     BrowserAnimationsModule,
-    PrestamoModule
+    LoanModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,12 +6,12 @@ import { Client } from '../client/model/Client';
 import { Game } from '../game/model/Game';
 import { LoanPage } from './model/LoanPage';
 import { Pageable } from './model/page/Pageable';
-import { Prestamo } from './model/Prestamo';
+import { Loan } from './model/Loan';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrestamoService {
+export class LoanService {
 
 
 
@@ -19,17 +19,16 @@ export class PrestamoService {
     private http: HttpClient
     ) { }
 
-  getPrestamos(pageable: Pageable): Observable<LoanPage> {
+  getLoans(pageable: Pageable): Observable<LoanPage> {
     return this.http.post<LoanPage>('http://localhost:8080/loan', {pageable:pageable});
   }
 
-  getPrestamo(game?: number, client?: number, date?: Date): Observable<Prestamo[]> {
-    return this.http.get<Prestamo[]>(this.composeFindUrl(game, client, date));
+  getLoan(game?: number, client?: number, date?: Date): Observable<Loan[]> {
+    return this.http.get<Loan[]>(this.composeFindUrl(game, client, date));
   }
 
   private composeFindUrl(game?: number, client?: number, date?: Date) : string {
     let params = '';
-    let dateS = '';
 
     if (game != null) {
         params += 'game_id='+game;
@@ -42,7 +41,7 @@ export class PrestamoService {
 
     if (date != null) {
         if (params != '') params += "&";
-        const dateSendingToServer = new DatePipe('en-US').transform(date, 'dd/MM/yyyy')
+        const dateSendingToServer = new DatePipe('en-US').transform(date, 'yyyy/MM/dd')
         params += "loan_date="+dateSendingToServer;
     }
 
@@ -52,15 +51,15 @@ export class PrestamoService {
     else return url + '?'+params;
   }
 
-  deletePrestamo(id: number):  Observable<any> {
+  deleteLoan(id: number):  Observable<any> {
     return this.http.delete('http://localhost:8080/loan/' + id);
   }
 
-  savePrestamo(prestamo: Prestamo): Observable<Prestamo> {
+  saveLoan(loan: Loan): Observable<Loan> {
       let url = 'http://localhost:8080/loan';
-      if(prestamo.id != null){
-          url += "/"+prestamo.id;
+      if(loan.id != null){
+          url += "/"+loan.id;
       }
-      return this.http.put<Prestamo>(url, prestamo);
+      return this.http.put<Loan>(url, loan);
   }
 }

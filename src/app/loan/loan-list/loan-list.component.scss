@@ -31,23 +31,6 @@
   }      
 }
 
-button {
-    width: 125px;
-}
-
-.button_create { 
-    flex: auto;
-    align-self: center;
-    text-align: right;
-
-    button {
-        margin-right: 20px;
-        border: 1px solid rgb(218, 218, 218);
-        font-size: 18px;
-        width: 250px;
-    }
-}
-
 .mat-cell {
     font-size: 16px;
 }
@@ -58,4 +41,14 @@ mat-label {
 
 .mat-select-value {
     color: black;
+}
+
+
+.buttons {
+    text-align: right;
+
+    button {
+        margin-left: 10px;
+        font-size: 14px;
+    }
 }

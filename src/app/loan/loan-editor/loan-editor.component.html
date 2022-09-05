@@ -4,7 +4,7 @@
     <form>
         <mat-form-field>
             <mat-label>Identificador</mat-label>
-            <input type="number" matInput placeholder="Identificador" [(ngModel)]="prestamo.id" name="id" disabled>
+            <input type="number" matInput placeholder="Identificador" [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
         
         <mat-form-field>
@@ -27,13 +27,13 @@
 
         <mat-form-field>
             <mat-label>Fecha de prestamo</mat-label>
-            <input type="date" matInput [(ngModel)]="prestamo.loanDate" name="prestamoDate" required>
+            <input type="date" matInput [(ngModel)]="loan.loanDate" name="prestamoDate" required>
             <mat-error>La fecha de prestamo no puede estar vacía</mat-error>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Fecha de devolución</mat-label>
-            <input type="date" matInput [(ngModel)]="prestamo.devDate" name="devDate" required>
+            <input type="date" matInput [(ngModel)]="loan.devDate" name="devDate" required>
             <mat-error>La fecha de devolución no puede estar vacía</mat-error>
         </mat-form-field>
     </form>
