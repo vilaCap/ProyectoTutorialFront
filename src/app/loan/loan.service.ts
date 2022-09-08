@@ -19,12 +19,12 @@ export class LoanService {
     private http: HttpClient
     ) { }
 
-  getLoans(pageable: Pageable): Observable<LoanPage> {
-    return this.http.post<LoanPage>('http://localhost:8080/loan', {pageable:pageable});
+  getLoans(customerId? :number, gameId? : number, searchDate?: Date,  pageable? : Pageable) : Observable<LoanPage> {
+    return this.http.post<LoanPage>(this.composeFindUrl(customerId, gameId, searchDate), {pageable:pageable});
   }
 
-  getLoan(game?: number, client?: number, date?: Date): Observable<Loan[]> {
-    return this.http.get<Loan[]>(this.composeFindUrl(game, client, date));
+  getLoan(customerId? :number, gameId? : number, searchDate?: Date) : Observable<Loan[]> {
+    return this.http.get<Loan[]>(this.composeFindUrl(customerId, gameId, searchDate));
   }
 
   private composeFindUrl(game?: number, client?: number, date?: Date) : string {

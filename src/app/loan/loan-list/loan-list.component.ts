@@ -80,13 +80,9 @@ export class LoanListComponent implements OnInit {
   }
 
   onSearch(): void {  
-    let game = this.filterGame != null ? this.filterGame : null;
-    let client = this.filterClient != null ? this.filterClient : null;
-    let date = this.filterDate != null ? this.filterDate : null;
-  
-    this.loanService.getLoan(game, client, date).subscribe(
-        loans =>  this.dataSource.data = loans
-    );
+
+    this.loadPageSearch();
+
   }
 
   deleteLoan(loan){
@@ -111,11 +107,10 @@ export class LoanListComponent implements OnInit {
     this.filterClient = client.value;
   }
 
-  setFileterDate(){
-    
-  }
-
   loadPage(event?: PageEvent) {
+    let game = this.filterGame != null ? this.filterGame : null;
+    let client = this.filterClient != null ? this.filterClient : null;
+    let date = this.filterDate != null ? this.filterDate : null;
 
     let pageable : Pageable =  {
         pageNumber: this.pageNumber,
@@ -131,7 +126,7 @@ export class LoanListComponent implements OnInit {
         pageable.pageNumber = event.pageIndex;
     }
 
-    this.loanService.getLoans(pageable).subscribe(data => {
+    this.loanService.getLoans(game, client, date, pageable).subscribe(data => {
         this.dataSource.data = data.content;
         this.pageNumber = data.pageable.pageNumber;
         this.pageSize = data.pageable.pageSize;
@@ -140,4 +135,31 @@ export class LoanListComponent implements OnInit {
 
 }  
 
+loadPageSearch(event?: PageEvent) {
+
+  let game = this.filterGame != null ? this.filterGame : null;
+  let client = this.filterClient != null ? this.filterClient : null;
+  let date = this.filterDate != null ? this.filterDate : null;
+  let pageable : Pageable =  {
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+      sort: [{
+          property: 'id',
+          direction: 'ASC'
+      }]
+  }
+
+  if (event != null){
+      pageable.pageSize = event.pageSize
+      pageable.pageNumber = event.pageIndex;
+  }
+
+    this.loanService.getLoans(game, client, date, pageable).subscribe(data => {
+      this.dataSource.data = data.content;
+      this.pageNumber = data.pageable.pageNumber;
+      this.pageSize = data.pageable.pageSize;
+      this.totalElements = data.totalElements;
+})
+
+}  
 }
